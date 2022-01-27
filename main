@@ -1,0 +1,125 @@
+% Problema 1:
+%   
+%Hallar la aproximación de la raíz de la ecuación 
+%x-e.^-x en el con un valor inicial Xo=0 y error de e=0.001.
+% 
+clc
+
+fprintf("METODO DE PUNTO FIJO\n");
+fprintf("PROBLEMA 1\n");
+fprintf('\n')
+
+f = @(x) sinh(x)-x;
+g = @(x) sinh(x);
+Xo  = 0;
+
+try 
+  [x_n, date, iter] = punto_fijo(g,Xo);
+  fprintf('La raiz aproximada es %d , el número de iteraciones es %d\n',x_n,iter);
+  
+  h=figure(1);
+  hold on;
+  x = -5:0.1:5;
+  
+  plot (x, f(x), "linewidth", 4)
+  plot(x_n,0, 'k*');
+  text (x_n+0.1, 1, "raiz");
+ 
+  legend ("f(x)");
+  xlabel ("x");
+  ylabel ("f(x)");
+  
+  set(gca, "linewidth", 3, "fontsize", 12)
+  set(gca, "xaxislocation", "origin")
+  set(gca, "yaxislocation", "origin");
+  set(gca, "box", "on")
+  
+  [n,m] = size(date)
+  fprintf("%s\t%s\t%s\t%s\t%s\t%s\n","Iter","x","x_nueva","f(x)","f(x_n)","error");
+  for i=1:n
+    fprintf('%d\t',i);
+    for j=1:m
+      fprintf('%.4f\t',date(i,j));
+    endfor
+    fprintf('\n');
+  endfor
+  
+
+catch err
+  fprintf('Error: %s\n',err.message);
+
+end
+hold off;
+
+x_n = 0;
+
+tic;
+
+for i = 1:1000000
+    x_n = x_n + 1;
+end
+
+toc;
+
+
+% Problema 2:
+%   
+%Hallar la aproximación de la raíz de la ecuación 
+%2*e.^(x.^2)-5*x  con un valor inicial Xo=0 y error de e=0.001.
+% 
+fprintf('\n')
+fprintf("PROBLEMA 2\n");
+fprintf('\n')
+
+f = @(x)2*e.^(x.^2)-5*x;
+g = @(x) 0.4*e.^(x.^2);
+Xo = 0;
+
+try 
+  [x_n, date, iter] = punto_fijo(g,Xo );
+  fprintf('La raiz aproximada es %d , el número de iteraciones es %d\n',x_n,iter);
+  
+  h=figure(2);
+  hold on;
+  x = -5:0.1:5;
+  
+  plot (x, f(x), "linewidth", 4)
+  plot(x_n,0, 'k*');
+  text (x_n+0.1, 1, "raiz");
+ 
+  legend ("f(x)");
+  xlabel ("x");
+  ylabel ("f(x)");
+  
+  set(gca, "linewidth", 2, "fontsize", 12)
+  set(gca, "xaxislocation", "origin")
+  set(gca, "yaxislocation", "origin");
+  set(gca, "box", "on")
+  
+  [n,m] = size(date)
+  fprintf("%s\t%s\t%s\t%s\t%s\t%s\n","Iter","x","x_nueva","f(x)","f(x_n)","error");
+  for i=1:n
+    fprintf('%d\t',i);
+    for j=1:m
+      fprintf('%.4f\t',date(i,j));
+    endfor
+    fprintf('\n');
+  endfor
+  
+catch err
+  fprintf('Error: %s\n',err.message);
+  
+end
+
+hold off;
+
+x_n = 0;
+
+tic;
+% Calcula el tiempo de ejecucion desde esta parte
+
+for i = 1:1000000
+    x_n = x_n + 1;
+end
+
+toc;
